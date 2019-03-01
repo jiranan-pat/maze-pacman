@@ -1,6 +1,6 @@
 import arcade.key
 
-MOVEMENT_SPEED = 4
+MOVEMENT_SPEED = 2.5
 
 DIR_STILL = 0
 DIR_UP = 1
@@ -35,6 +35,7 @@ class World:
         self.height = height
  
         self.pacman = Pacman(self, width // 2, height // 2)
+        self.maze = Maze(self)
  
     def update(self, delta):
         self.pacman.update(delta)
@@ -48,3 +49,28 @@ class World:
             self.pacman.direction = DIR_LEFT
         if key == arcade.key.RIGHT:
             self.pacman.direction = DIR_RIGHT
+    
+
+class Maze:
+    def __init__(self, world):
+        self.map = [ '####################',
+                     '#..................#',
+                     '#.###.###..###.###.#',
+                     '#.#...#......#...#.#',
+                     '#.#.###.####.###.#.#',
+                     '#.#.#..........#.#.#',
+                     '#.....###..###.....#',
+                     '#.#.#..........#.#.#',
+                     '#.#.###.####.###.#.#',
+                     '#.#...#......#...#.#',
+                     '#.###.###..###.###.#',
+                     '#..................#',
+                     '####################' ]
+        self.height = len(self.map)
+        self.width = len(self.map[0])
+    
+    def has_wall_at(self, r, c):
+        return self.map[r][c] == '#'
+ 
+    def has_dot_at(self, r, c):
+        return self.map[r][c] == '.'
